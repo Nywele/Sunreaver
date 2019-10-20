@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2019/10/10 0010 22:58
  **/
 @Entity
-@Table(name = "cloud_file")
+@Table(name = "ycd_cloud_file")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,15 +38,21 @@ public class CloudFile {
     @Column(name = "size", nullable = false, length = 20)
     private Long size;
 
+    @Column(name = "type", nullable = false)
+    private String type;
+
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
 
 
-    public CloudFile(String filename, String filepath, Long userId) {
+    public CloudFile(String filename, String filepath, String type, Long size, Long userId) {
         this.filename = filename;
         this.filepath = filepath;
         this.userId = userId;
         this.shareMode = ShareMode.ALLOW_SHARE_EVERYONE.getCode();
+        this.type = type;
+        this.size = size;
+        this.updateTime = new Date();
     }
 }

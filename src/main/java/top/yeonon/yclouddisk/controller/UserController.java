@@ -1,7 +1,15 @@
 package top.yeonon.yclouddisk.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import top.yeonon.yclouddisk.security.auth.TokenCheck;
+import top.yeonon.yclouddisk.service.IUserService;
+import top.yeonon.yclouddisk.vo.requestvo.QueryUserInfoRequestVo;
+import top.yeonon.yclouddisk.vo.requestvo.UpdateUserInfoRequestVo;
+import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
+import top.yeonon.yclouddisk.vo.responsevo.QueryUserInfoResponseVo;
+import top.yeonon.yclouddisk.vo.responsevo.UpdateUserInfoResponseVo;
+import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
 
 /**
  * @Author yeonon
@@ -11,5 +19,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
+    private IUserService userService;
+
+    @PostMapping
+    public UserRegistrationByPasswordResponseVo userRegistrationByPassword(@RequestBody UserRegistrationByPasswordRequestVo requestVo) {
+        return userService.userRegistrationByPassword(requestVo);
+    }
+
+    @TokenCheck
+    @GetMapping("/{id}")
+    public QueryUserInfoResponseVo queryUserInfo(@PathVariable("id") Long id) {
+        QueryUserInfoRequestVo requestVo = new QueryUserInfoRequestVo(id);
+        return userService.queryUserInfo(requestVo);
+    }
+
+    @GetMapping("/{id}/other")
+    public QueryUserInfoResponseVo queryOtherUserInfo(@PathVariable("id") Long id) {
+        QueryUserInfoRequestVo requestVo = new QueryUserInfoRequestVo(id);
+        return userService.queryOtherUserInfo(requestVo);
+    }
+
+    @TokenCheck
+    @PutMapping("/{id}")
+    public UpdateUserInfoResponseVo updateUserInfo(@PathVariable("id") Long id,
+                                                   @RequestBody UpdateUserInfoRequestVo requestVo) {
+        requestVo.setId(id);
+        return userService.updateUserInfo(requestVo);
+    }
 
 }

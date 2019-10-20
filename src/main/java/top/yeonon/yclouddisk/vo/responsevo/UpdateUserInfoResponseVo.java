@@ -1,19 +1,17 @@
 package top.yeonon.yclouddisk.vo.responsevo;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * @Author yeonon
- * @date 2019/10/11 0011 23:32
+ * @date 2019/10/16 0016 22:51
  **/
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class UserRegistrationByPasswordResponseVo {
+public class UpdateUserInfoResponseVo {
 
     private Long id;
 }
